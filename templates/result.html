@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Prediksi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Hasil Prediksi</h1>
+        <div class="result-container">
+            <h2>Prediksi: <span style="color: #1565c0;">{{ prediction }}</span></h2>
+            <div class="probabilities">
+                <h3>Probabilitas Prediksi:</h3>
+                <ul>
+                    <li>
+                        <span>Setosa:</span>
+                        <span style="color: #1e88e5; font-weight: 600;">{{ "%.2f"|format(probabilities[0] * 100) }}%</span>
+                    </li>
+                    <li>
+                        <span>Versicolor:</span>
+                        <span style="color: #1e88e5; font-weight: 600;">{{ "%.2f"|format(probabilities[1] * 100) }}%</span>
+                    </li>
+                    <li>
+                        <span>Virginica:</span>
+                        <span style="color: #1e88e5; font-weight: 600;">{{ "%.2f"|format(probabilities[2] * 100) }}%</span>
+                    </li>
+                </ul>
+            </div>
+            <div id="graph"></div>
+            <a href="{{ url_for('home') }}" class="back-button">Kembali ke Form</a>
+        </div>
+    </div>
+    <script>
+        var graphs = {{ graphJSON | safe }};
+        Plotly.newPlot('graph', graphs.data, graphs.layout);
+    </script>
+</body>
+</html> 
